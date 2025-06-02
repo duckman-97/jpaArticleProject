@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>here is test list!!!!!!!!!!</h1>
+<form id="testForm" name="testForm" action="/testInsert" method="POST">
+    <input type="number" id="testId" name="testId"  placeholder="아이디 입력"/>
+    <input type="text" id="testName" name="testName" placeholder="네임 입력" />
+    <button type="submit">submit</button>
+</form>
+
+<form id="formBody" name="formBody" action="/deleteList"  method="POST">
+    <button type="submit">선택삭제</button>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    id
+                </th>
+                <th>
+                    name
+                </th>
+                <th>
+                    삭제<input type="checkbox" name=""  />
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="item : ${list}">
+                <td th:text="${item.testId}"></td>
+                <td th:text="${item.testName}"></td>
+                <td> <input type="checkbox" name="testIdList" th:value="${item.testId}" /></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>
