@@ -18,21 +18,37 @@ public class BoardArticleController {
     }
 
 
-
     //게시글 리스트
     @GetMapping("articleList")
     public String ArticleList(Model model) {
-
+        System.out.println("게시글 리스트");
         return "article/list";
 
     }
 
-
     //게시판 상세
+    @GetMapping("articleView")
+    public String ArticleView(Model model) {
+        System.out.println("게시글 상세");
+        return "article/view";
 
-    //게시판 수정 및 등록
+    }
+
+    //게시판 등록
+    @GetMapping("articleWrite")
+    public String ArticleWrite(Model model) {
+        System.out.println("게시글 등록");
+        return "article/write";
+
+    }
 
     //게시판 삭제
+    @GetMapping("articleDelete")
+    public String ArticleDelete(Model model) {
+        System.out.println("게시글 삭제");
+        return "redirect:/articleList" ;
+
+    }
 
 
 }

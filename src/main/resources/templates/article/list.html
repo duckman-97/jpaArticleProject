@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -39,15 +40,23 @@
 
         </tbody>
 
-        <button id="articelWrite" name="articelWrite">
-            글쓰기
-        </button>
     </table>
 </form>
 </body>
 
-<script type="application/javascript">
+<button id="articelWrite" type="button">
+    글쓰기
+</button>
 
+<script type="application/javascript">
+    $("#articelWrite").on("click",function(){
+        window.location.href="/articleWrite";
+    });
+
+    $(document).ready(function(){
+
+
+    });
 </script>
 
 </html>
