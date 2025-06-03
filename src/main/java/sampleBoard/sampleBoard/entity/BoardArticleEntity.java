@@ -12,7 +12,6 @@ public class BoardArticleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long articleId;
 
-    
     //제목
     private String articleTitle;
 

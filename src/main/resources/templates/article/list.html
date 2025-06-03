@@ -15,31 +15,23 @@
 </form>
 
 <form id="formBody" name="formBody" action="/deleteList"  method="POST">
-    <button type="submit">선택삭제</button>
+   <!-- <button type="submit">선택삭제</button>-->
     <table>
         <thead>
             <tr>
-                <th>
-                    id
-                </th>
-                <th>
-                    name
-                </th>
-                <th>
-                    삭제<input type="checkbox" name=""  />
-                </th>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
             </tr>
         </thead>
 
         <tbody>
-            <tr th:each="article : ${articleList}">
+            <tr th:each="article : ${articleList}"  class="articleBody" th:attr="data-rowid=${article.articleId}" >
                 <td th:text="${article.articleId}"></td>
                 <td th:text="${article.articleTitle}"></td>
-                <td th:text="${article.articleId}"></td>
+                <td th:text="${article.articleWriter}"></td>
             </tr>
-
         </tbody>
-
     </table>
 </form>
 </body>
@@ -49,12 +41,19 @@
 </button>
 
 <script type="application/javascript">
-    $("#articelWrite").on("click",function(){
-        window.location.href="/articleWrite";
-    });
-
     $(document).ready(function(){
 
+        //글쓰기 버튼 클릭시
+        $("#articelWrite").on("click",function(){
+            window.location.href="/articleWrite";
+        });
+
+        //게시글 클릭시
+        $(".articleBody").on("click",function(){
+            const articleId = $(this).data("rowid");
+
+            window.location.href = "/articleView?articleId=" + articleId;
+        });
 
     });
 </script>

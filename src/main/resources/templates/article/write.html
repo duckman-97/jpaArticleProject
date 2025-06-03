@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<body>
+    <h1>
+        게시글 작성
+    </h1>
+
+    <form method="post" action="/articleWriteAction">
+        <label for="articleTitle"> 제목 </label>
+        <input type="text" id="articleTitle" name="articleTitle"  placeholder="제목을 입력해주세요.">
+
+        <label for="articleContent"> 내용 </label>
+        <textarea id="articleContent" name="articleContent" placeholder="내용을 입력해주세요."></textarea>
+
+        <label for="articleWriter"> 작성자 </label>
+        <input type="text" id="articleWriter" name="articleWriter"  placeholder="작성자를 입력해주세요.">
+
+
+
+        <button type="submit">글작성</button>
+
+    </form>
+</body>
+
+<script>
+    // 오늘 날짜를 yyyy-MM-dd 형식으로 생성
+    $(document).ready(function (){
+        const today = new Date().toISOString().split('T')[0];
+        $("#createdDate").val(today);
+
+    });
+
+</script>

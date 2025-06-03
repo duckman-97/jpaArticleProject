@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<html lang="en">
+
+    <body>
+    <h1> 게시글 상세 테스트</h1>
+
+    <label for="articleTitle">제목</label><input type="text" id="articleTitle" name="articleTitle" th:text="${articleData.articleTitle}" readonly>
+
+    <label for="articleContent">내용</label><input type="text" id="articleContent" name="articleContent"  readonly>
+
+    <label for="articleWriter">작성자</label><input type="text" id="articleWriter" name="articleWriter"  readonly>
+
+    <label for="createdDate">작성일자</label><input type="text" id="createdDate" name="createdDate"  readonly>
+
+
+    </body>
+</html>
