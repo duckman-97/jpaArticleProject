@@ -7,15 +7,16 @@
         게시글 작성
     </h1>
 
-    <form method="post" action="/articleWriteAction">
+    <form method="post" action="/articleWriteAction" id="articleForm">
         <label for="articleTitle"> 제목 </label>
-        <input type="text" id="articleTitle" name="articleTitle"  placeholder="제목을 입력해주세요.">
+        <input type="hidden" id="articleId" name="articleId" th:value="${articleData.articleId == null ? '' : articleData.articleId} ">
+        <input type="text" id="articleTitle" name="articleTitle"  placeholder="제목을 입력해주세요." th:value="${articleData.articleTitle == null ? '' : articleData.articleTitle} " >
 
         <label for="articleContent"> 내용 </label>
-        <textarea id="articleContent" name="articleContent" placeholder="내용을 입력해주세요."></textarea>
+        <textarea id="articleContent" name="articleContent" placeholder="내용을 입력해주세요." th:text="${articleData.articleContent == null ? '' : articleData.articleContent} "></textarea>
 
         <label for="articleWriter"> 작성자 </label>
-        <input type="text" id="articleWriter" name="articleWriter"  placeholder="작성자를 입력해주세요.">
+        <input type="text" id="articleWriter" name="articleWriter"  placeholder="작성자를 입력해주세요." th:value="${articleData.articleWriter == null ? '' : articleData.articleWriter} ">
 
 
 
@@ -25,11 +26,24 @@
 </body>
 
 <script>
-    // 오늘 날짜를 yyyy-MM-dd 형식으로 생성
+
     $(document).ready(function (){
+
+        // 오늘 날짜를 yyyy-MM-dd 형식으로 생성
         const today = new Date().toISOString().split('T')[0];
         $("#createdDate").val(today);
 
+        //폼 제출 전확인창
+        $("#articleForm").on("submit",function(e){
+            var articleId = $("#articleId").val();
+
+            if(!confirm(articleId != '' && articleId != null ? "글을 수정하시겠습니까?":"글을 등록하시겠습니까?"  )){
+                e.preventDefault();
+            }
+        });
+
     });
+
+
 
 </script>

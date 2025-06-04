@@ -8,11 +8,6 @@
 <body>
 
 <h1>ArticleBoardTest</h1>
-<form id="testForm" name="testForm" action="/testInsert" method="POST">
-    <input type="number" id="testId" name="testId"  placeholder="아이디 입력"/>
-    <input type="text" id="testName" name="testName" placeholder="네임 입력" />
-    <button type="submit">submit</button>
-</form>
 
 <form id="formBody" name="formBody" action="/deleteList"  method="POST">
    <!-- <button type="submit">선택삭제</button>-->
@@ -30,6 +25,7 @@
                 <td th:text="${article.articleId}"></td>
                 <td th:text="${article.articleTitle}"></td>
                 <td th:text="${article.articleWriter}"></td>
+                <td th:text="${#temporals.format(article.createdDate , 'yyyy-MM-dd HH:mm:ss')}"></td>
             </tr>
         </tbody>
     </table>

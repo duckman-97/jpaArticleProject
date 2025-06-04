@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import sampleBoard.sampleBoard.entity.BoardArticleEntity;
 import sampleBoard.sampleBoard.entity.TestEntity;
 import sampleBoard.sampleBoard.service.BoardArticleService;
@@ -38,11 +39,14 @@ public class BoardArticleController {
 
     //게시판 상세
     @GetMapping("articleView")
-    public String ArticleView(Model model, @Param("articleId")Long articleId) {
+    public String ArticleView(Model model, @RequestParam(value = "articleId")Long articleId) {
         System.out.println("게시글 상세 = " + articleId);
-        Optional<BoardArticleEntity> articleData;
+        BoardArticleEntity articleData =  new BoardArticleEntity();
+        BoardArticleEntity entity = new BoardArticleEntity();
+        entity.setArticleId(articleId);
 
-        //boardArticleService.getArticleData()
+        articleData = boardArticleService.getArticleData(entity);
+        model.addAttribute("articleData", articleData);
 
         return "article/view";
 
@@ -50,8 +54,18 @@ public class BoardArticleController {
 
     //게시판 등록 페이지
     @GetMapping("articleWrite")
-    public String ArticleWrite(Model model) {
+    public String ArticleWrite(Model model , @RequestParam(value = "articleId", required = false)Long articleId) {
         System.out.println("게시글 등록");
+        BoardArticleEntity entity = new BoardArticleEntity();
+        BoardArticleEntity articleData = new BoardArticleEntity();
+
+        if(articleId != null ){
+            entity.setArticleId(articleId);
+            articleData = boardArticleService.getArticleData(entity);
+
+        }
+        model.addAttribute("articleData", articleData);
+
         return "article/write";
 
     }
@@ -61,7 +75,10 @@ public class BoardArticleController {
     public String ArticleAction(Model model, BoardArticleEntity entity) {
 
         System.out.println(entity.toString());
+
         boardArticleService.insertArticle(entity);
+
+
 
         return "redirect:/articleList";
 

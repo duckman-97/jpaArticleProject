@@ -5,14 +5,46 @@
     <body>
     <h1> 게시글 상세 테스트</h1>
 
-    <label for="articleTitle">제목</label><input type="text" id="articleTitle" name="articleTitle" th:text="${articleData.articleTitle}" readonly>
+    <input type="hidden" id="articleId" name="articleId" th:value="${articleData.articleId}">
 
-    <label for="articleContent">내용</label><input type="text" id="articleContent" name="articleContent"  readonly>
+    <label for="articleTitle">제목</label><input type="text" id="articleTitle" name="articleTitle" th:value="${articleData.articleTitle}"  readonly>
 
-    <label for="articleWriter">작성자</label><input type="text" id="articleWriter" name="articleWriter"  readonly>
+    <label for="articleContent">내용</label><input type="text" id="articleContent" name="articleContent"  th:value="${articleData.articleContent}"  readonly>
 
-    <label for="createdDate">작성일자</label><input type="text" id="createdDate" name="createdDate"  readonly>
+    <label for="articleWriter">작성자</label><input type="text" id="articleWriter" name="articleWriter"  th:value="${articleData.articleWriter}"  readonly>
 
+    <label for="createdDate">작성일자</label><input type="text" id="createdDate" name="createdDate"  th:value="${#temporals.format(articleData.createdDate , 'yyyy-MM-dd HH:mm:ss')}" readonly>
+
+    <button id="articleModify" name="articleModify" > 글 수정</button>
+    <button id="articleDelete" name="articleDelete" > 글 삭제</button>
 
     </body>
+
+    <script>
+        $('document').ready(function(){
+
+            //글 수정
+            $("#articleModify").on("click",function (e){
+                var articleId = $("#articleId").val();
+                if(!confirm("글을 수정하시겠습니까?")){
+                    e.preventDefault();
+                }else{
+                    window.location.href = "/articleWrite?articleId=" + articleId;
+                }
+            });
+
+            //글 삭제
+            $("#articleDelete").on("click",function (e){
+                var articleId = $("#articleId").val();
+                if(!confirm("글을 삭제하시겠습니까?")){
+                    e.preventDefault();
+                }else{
+                    window.location.href = "/articleDelete?articleId=" + articleId;
+                }
+            });
+
+
+        });
+
+    </script>
 </html>
