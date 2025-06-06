@@ -20,7 +20,9 @@
 
 
 
+        <br/>
         <button type="submit">글작성</button>
+        <button type="button" id="articleGoList" name="articleGoList" >목록</button>
 
     </form>
 </body>
@@ -40,6 +42,12 @@
             if(!confirm(articleId != '' && articleId != null ? "글을 수정하시겠습니까?":"글을 등록하시겠습니까?"  )){
                 e.preventDefault();
             }
+        });
+
+        //목록
+        $("#articleGoList").on("click",function(){
+
+            window.location.href = "/articleList";
         });
 
     });

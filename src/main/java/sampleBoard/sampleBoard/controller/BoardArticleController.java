@@ -84,10 +84,21 @@ public class BoardArticleController {
 
     }
 
-    //게시판 삭제
-    @GetMapping("articleDelete")
-    public String ArticleDelete(Model model) {
-        System.out.println("게시글 삭제");
+    //게시글 삭제
+    @PostMapping("articleDelete")
+    public String ArticleDelete(Model model, BoardArticleEntity entity) {
+
+        if(entity.getArticleId() != null ){
+
+            boardArticleService.deleteArticle(entity);
+            System.out.println("게시글 삭제");
+
+        }else{
+            System.out.println("게시글 정보를 찾을 수 없습니다.");
+        }
+
+
+
         return "redirect:/articleList" ;
 
     }

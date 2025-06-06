@@ -63,6 +63,11 @@ public class BoardArticleService {
     
     //게시판 수정 및 등록
     
-    //게시판 삭제
+    //게시글 삭제
+    @Transactional
+    public void deleteArticle(BoardArticleEntity entity){
+        boardArticleRepository.delete(entity);
+        System.out.println("데이터 삭제");
+    }
 
 }

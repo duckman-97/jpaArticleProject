@@ -5,18 +5,32 @@
     <body>
     <h1> 게시글 상세 테스트</h1>
 
-    <input type="hidden" id="articleId" name="articleId" th:value="${articleData.articleId}">
+    <form method="POST" action="/" id="articleForm" name="articleForm">
 
-    <label for="articleTitle">제목</label><input type="text" id="articleTitle" name="articleTitle" th:value="${articleData.articleTitle}"  readonly>
+        <input type="hidden" id="articleId" name="articleId" th:value="${articleData.articleId}">
 
-    <label for="articleContent">내용</label><input type="text" id="articleContent" name="articleContent"  th:value="${articleData.articleContent}"  readonly>
+        <label for="articleTitle">제목</label><input type="text" id="articleTitle" name="articleTitle" th:value="${articleData.articleTitle}"  readonly>
 
-    <label for="articleWriter">작성자</label><input type="text" id="articleWriter" name="articleWriter"  th:value="${articleData.articleWriter}"  readonly>
+        <label for="articleContent">내용</label><input type="text" id="articleContent" name="articleContent"  th:value="${articleData.articleContent}"  readonly>
+
+        <label for="articleWriter">작성자</label><input type="text" id="articleWriter" name="articleWriter"  th:value="${articleData.articleWriter}"  readonly>
+    </form>
+
 
     <label for="createdDate">작성일자</label><input type="text" id="createdDate" name="createdDate"  th:value="${#temporals.format(articleData.createdDate , 'yyyy-MM-dd HH:mm:ss')}" readonly>
 
-    <button id="articleModify" name="articleModify" > 글 수정</button>
-    <button id="articleDelete" name="articleDelete" > 글 삭제</button>
+
+    <form method="POST" action="/" id="commentForm" name="commentForm">
+        <textarea  id="commentContext" name="commentContext" placeholder="댓글 내용을 입력해 주세요."></textarea>
+
+        <button type="button" id="commentGoInsert" name="commentGoInsert">댓글 등록</button>
+    </form>
+
+
+    <br/>
+    <button id="articleGoModify" name="articleGoModify" > 글 수정</button>
+    <button id="articleGoDelete" name="articleGoDelete" > 글 삭제</button>
+    <button id="articleGoList" name="articleGoList" > 목록</button>
 
     </body>
 
@@ -24,7 +38,7 @@
         $('document').ready(function(){
 
             //글 수정
-            $("#articleModify").on("click",function (e){
+            $("#articleGoModify").on("click",function (e){
                 var articleId = $("#articleId").val();
                 if(!confirm("글을 수정하시겠습니까?")){
                     e.preventDefault();
@@ -34,12 +48,38 @@
             });
 
             //글 삭제
-            $("#articleDelete").on("click",function (e){
-                var articleId = $("#articleId").val();
+            $("#articleGoDelete").on("click",function (e){
                 if(!confirm("글을 삭제하시겠습니까?")){
                     e.preventDefault();
                 }else{
-                    window.location.href = "/articleDelete?articleId=" + articleId;
+
+                    var articleId = $("#articleId").val();
+                    var articleForm = $("#articleForm");
+
+
+                    if(articleId != null){
+                       articleForm.attr("action","/articleDelete");
+                       articleForm.submit();
+
+                    }else{
+                        alert("게시글 정보를 찾을 수 없습니다.");
+                    }
+
+
+                }
+            });
+
+            //목록으로 돌아가기
+            $("#articleGoList").on("click",function(){
+                window.location.href = "/articleList";
+            })
+
+            //댓글 등록
+            $("#commentGoInsert").on("click",function(e){
+                if(confirm("댓글을 등록하시겠습니까?")){
+
+                }else{
+                    e.preventDefault();
                 }
             });
 
