@@ -21,10 +21,15 @@
 
 
     <form method="POST" action="/" id="commentForm" name="commentForm">
-        <textarea  id="commentContext" name="commentContext" placeholder="댓글 내용을 입력해 주세요."></textarea>
+        <input type="hidden" id="commentWriter" name="commentWriter" value="테스트댓글작성자">
+        <textarea  id="commentContent" name="commentContent" placeholder="댓글 내용을 입력해 주세요."></textarea>
 
         <button type="button" id="commentGoInsert" name="commentGoInsert">댓글 등록</button>
     </form>
+
+    <h2>댓글리스트 테스트</h2>
+    <ul id="commentList" name="commentList">
+    </ul>
 
 
     <br/>
@@ -36,6 +41,10 @@
 
     <script>
         $('document').ready(function(){
+
+            //댓글 리스트 호출
+            getCommentList();
+
 
             //글 수정
             $("#articleGoModify").on("click",function (e){
@@ -77,11 +86,75 @@
             //댓글 등록
             $("#commentGoInsert").on("click",function(e){
                 if(confirm("댓글을 등록하시겠습니까?")){
+                    var commentContent = $("#commentContent").val();
+                    var articleId = $("#articleId").val();
+                    var commentWriter = $("#commentWriter").val();
+
+                    if(!commentContent.trim()){
+                        alert("댓글 내용을 입력해 주세요");
+                        return;
+                    }
+
+                    $.ajax({
+                        type : "POST",
+                        url : "/insertComment" ,
+                        data : JSON.stringify({
+                            commentContent : commentContent,
+                            commentWriter : commentWriter,
+                            articleId : articleId
+                        }),
+                        contentType : "application/json",
+
+                        success :function (response){
+                            alert("댓글이 등록되었습니다,");
+                            getCommentList();
+
+                        },
+                        error : function (e){
+                            alert("댓글 등록에 오류가 발생했습니다.");
+                            console.log("e : " + e.responseText);
+                        }
+                    })
+
 
                 }else{
                     e.preventDefault();
                 }
             });
+
+            //댓글 리스트 가져오기
+            function getCommentList(){
+
+                var commentList = $("#commentList");
+                var articleId = $("#articleId").val();
+
+                //댓글 불러오기전에 비우기
+                commentList.empty();
+
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url : "/getCommentList",
+                    data : JSON.stringify({
+                        articleId : articleId
+                    }),
+                    success : function(response){
+                        $.each(response , function(index , comment){
+                            commentList.append("<li>"+comment.commentContent + "</li>")
+                            commentList.append("<li>"+comment.createdDate + "</li>")
+                            $("#articleContent").empty()
+
+
+                        });
+                    } ,
+                    error : function(e){
+                        alert("댓글 리스트를 불러오는데 실패했습니다.");
+                        console.log("error : " + e.responseText);
+                    }
+
+                    }
+                )
+            }
 
 
         });
