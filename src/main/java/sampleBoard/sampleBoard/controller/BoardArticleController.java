@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import sampleBoard.sampleBoard.entity.BoardArticleEntity;
 import sampleBoard.sampleBoard.entity.TestEntity;
 import sampleBoard.sampleBoard.service.BoardArticleService;
+import sampleBoard.sampleBoard.service.CommentService;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +22,13 @@ public class BoardArticleController {
 
     private final BoardArticleService boardArticleService;
 
-    public BoardArticleController(BoardArticleService boardArticleService) {
+    private final CommentService commentService;
+
+    public BoardArticleController(BoardArticleService boardArticleService , CommentService commentService) {
         this.boardArticleService = boardArticleService;
+        this.commentService = commentService;
+
+
     }
 
 
@@ -92,6 +98,9 @@ public class BoardArticleController {
 
             boardArticleService.deleteArticle(entity);
             System.out.println("게시글 삭제");
+
+            commentService.deleteForArticleId(entity.getArticleId());
+
 
         }else{
             System.out.println("게시글 정보를 찾을 수 없습니다.");

@@ -32,6 +32,16 @@ public class CommentService {
         return result;
     }
 
+    @Transactional
+    public void deleteForArticleId(Long articleId){
+        if(articleId != null){
+            commentRepository.deleteForArticleId(articleId);
+        }else{
+            System.out.println("게시글 번호가 조회되지 않습니다.");
+        }
+
+    }
+
 
 
 

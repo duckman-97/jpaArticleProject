@@ -67,7 +67,10 @@ public class BoardArticleService {
     @Transactional
     public void deleteArticle(BoardArticleEntity entity){
         boardArticleRepository.delete(entity);
-        System.out.println("데이터 삭제");
+        System.out.println("게시글 데이터 삭제");
+
+
+
     }
 
 }
