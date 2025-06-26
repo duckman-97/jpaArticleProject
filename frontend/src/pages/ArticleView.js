@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {Link, useParams} from "react-router-dom";
+import axios from "axios";
 
 
 function ArticleView() {
@@ -14,6 +15,19 @@ function ArticleView() {
 
     }, [articleId]);
 
+    const handleDelete = async ()=>{
+        try {
+            const response =  axios.post("http://localhost:9090/api/articleDelete", {
+                articleId: articleId,
+            });
+            alert("삭제가 완료되었습니다.")
+            window.location.href ="/";
+        } catch (error) {
+            console.error("에러 발생:", error);
+            alert("삭제 실패!");
+        }
+    }
+
 
 
     return (
@@ -22,8 +36,8 @@ function ArticleView() {
             <h2>{articleData.articleTitle}</h2>
             <p>작성자: {articleData.articleWriter}</p>
             <p>{articleData.articleContent}</p>
+            <button type={"button"} onClick={handleDelete}>글삭제</button>
         </div>
-
     )
 }
 
